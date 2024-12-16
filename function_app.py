@@ -4,7 +4,7 @@ import json
 from azureApi import main as process_video
 
 # Define the Function App
-app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
+app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)  
 
 # Route for the Function
 @app.route(route="func")
