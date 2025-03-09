@@ -609,6 +609,7 @@ def get_audio_filename_by_movement_score(movement_score):
     return closest_id
 
 def extract_best_clips(ffmpeg_path, ffprobe_path, input_file, total_duration, fps, window_size=4.0, clips=4):
+    logging.info("inside the extract best clips function")
     folder = os.path.dirname(input_file)
     filename = os.path.basename(input_file)
     name, ext = os.path.splitext(filename)
@@ -654,7 +655,7 @@ def extract_best_clips(ffmpeg_path, ffprobe_path, input_file, total_duration, fp
 
     # Sort by score descending
     windows.sort(key=lambda x: x[2], reverse=True)
-    loging.info("sorted")
+    logging.info("sorted")
     # Helper to check overlap
     def is_overlapping(a, b):
         return not (a[1] <= b[0] or b[1] <= a[0])
@@ -680,6 +681,7 @@ def extract_best_clips(ffmpeg_path, ffprobe_path, input_file, total_duration, fp
             f"-ss {start_time} -t {duration} -map 0 -c:v libx264 -c:a aac -y \"{output_temp}\""
         )
         subprocess.run(cmd_ffmpeg, shell=True, check=True)
+        logging.info("cutting 1s video")
         temp_files.append(output_temp)
 
     # Step 4: Concatenate the selected segments
@@ -701,8 +703,9 @@ def extract_best_clips(ffmpeg_path, ffprobe_path, input_file, total_duration, fp
         f'-map "[v]" -map "[a]" '
         f'-hide_banner -loglevel error -y "{final_output_file}"'
     )
-    subprocess.run(cmd_concat, shell=True)
+    subprocess.run(cmd_concat, shell=True, check=True)
     logging.info("finished running 2nd cmd")
+    return final_output_file
     #cmd_concat = (
     #    f"\"{ffmpeg_path}\" -f concat -safe 0 -i \"{concat_list_path}\" "
     #    f"-c copy -hide_banner -loglevel error -y \"{final_output_file}\""
