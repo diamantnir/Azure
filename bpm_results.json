@@ -1,0 +1,447 @@
+[
+  {
+    "filename": "50 Cent - Candy Shop.mp3",
+    "bpm": 103.359375,
+    "id": 735
+  },
+  {
+    "filename": "50 Cent - In Da Club.mp3",
+    "bpm": 143.5546875,
+    "id": 736
+  },
+  {
+    "filename": "A-ha - Take on Me1.mp3",
+    "bpm": 172.265625,
+    "id": 779
+  },
+  {
+    "filename": "A-ha - Take on Me2.mp3",
+    "bpm": 172.265625,
+    "id": 780
+  },
+  {
+    "filename": "Ariana Grande - 7 Rings1.mp3",
+    "bpm": 69.83741554054055,
+    "id": 721
+  },
+  {
+    "filename": "Ariana Grande - 7 Rings2.mp3",
+    "bpm": 92.28515625,
+    "id": 722
+  },
+  {
+    "filename": "Ariana Grande - The Boy Is Mine.mp3",
+    "bpm": 112.34714673913044,
+    "id": 704
+  },
+  {
+    "filename": "Ariana Grande - Yes And.mp3",
+    "bpm": 117.45383522727273,
+    "id": 705
+  },
+  {
+    "filename": "Backstreet Boys - I Want It That Way1.mp3",
+    "bpm": 99.38401442307692,
+    "id": 863
+  },
+  {
+    "filename": "Backstreet Boys - I Want It That Way2.mp3",
+    "bpm": 99.38401442307692,
+    "id": 864
+  },
+  {
+    "filename": "Benson Boone - Beautiful Things.mp3",
+    "bpm": 107.666015625,
+    "id": 861
+  },
+  {
+    "filename": "Benson Boone - Slow it Down.mp3",
+    "bpm": 107.666015625,
+    "id": 862
+  },
+  {
+    "filename": "Beyonce -  Single Ladies1.mp3",
+    "bpm": 112.34714673913044,
+    "id": 865
+  },
+  {
+    "filename": "Beyonce -  Single Ladies2.mp3",
+    "bpm": 95.703125,
+    "id": 866
+  },
+  {
+    "filename": "Beyonce -  Texas Hold Em.mp3",
+    "bpm": 112.34714673913044,
+    "id": 706
+  },
+  {
+    "filename": "Billie Eilish - Lovely.mp3",
+    "bpm": 151.99908088235293,
+    "id": 720
+  },
+  {
+    "filename": "Billie Eilish - Lunch.mp3",
+    "bpm": 123.046875,
+    "id": 851
+  },
+  {
+    "filename": "Billie Eilish - Lunch2.mp3",
+    "bpm": 123.046875,
+    "id": 852
+  },
+  {
+    "filename": "Black Eyed Peas - I Gotta Feeling1.mp3",
+    "bpm": 129.19921875,
+    "id": 725
+  },
+  {
+    "filename": "Black Eyed Peas - I Gotta Feeling2.mp3",
+    "bpm": 129.19921875,
+    "id": 726
+  },
+  {
+    "filename": "Britney Spears - Toxic1.mp3",
+    "bpm": 143.5546875,
+    "id": 897
+  },
+  {
+    "filename": "Britney Spears - Toxic2.mp3",
+    "bpm": 143.5546875,
+    "id": 897
+  },
+  {
+    "filename": "Bruno Mars - Just the Way You Are.mp3",
+    "bpm": 107.666015625,
+    "id": 868
+  },
+  {
+    "filename": "Bruno Mars - Marry You.mp3",
+    "bpm": 143.5546875,
+    "id": 869
+  },
+  {
+    "filename": "Cee Lo Green - Fk You.mp3",
+    "bpm": 95.703125,
+    "id": 870
+  },
+  {
+    "filename": "Chappell Roan - Good Luck Babe.mp3",
+    "bpm": 123.046875,
+    "id": 860
+  },
+  {
+    "filename": "Christina Aguilera - Beautiful.mp3",
+    "bpm": 123.046875,
+    "id": 871
+  },
+  {
+    "filename": "Coldplay - A Sky Full of Stars1.mp3",
+    "bpm": 117.45383522727273,
+    "id": 872
+  },
+  {
+    "filename": "Coldplay - A Sky Full of Stars2.mp3",
+    "bpm": 123.046875,
+    "id": 873
+  },
+  {
+    "filename": "Coldplay - Paradise.mp3",
+    "bpm": 143.5546875,
+    "id": 724
+  },
+  {
+    "filename": "Coldplay - Viva La Vida.mp3",
+    "bpm": 135.99917763157896,
+    "id": 723
+  },
+  {
+    "filename": "Coolio - Gangstas Paradise.mp3",
+    "bpm": 117.45383522727273,
+    "id": 737
+  },
+  {
+    "filename": "Dasha - Austin.mp3",
+    "bpm": 117.45383522727273,
+    "id": 776
+  },
+  {
+    "filename": "David Guetta - Im Good1.mp3",
+    "bpm": 143.5546875,
+    "id": 707
+  },
+  {
+    "filename": "David Guetta - Im Good2.mp3",
+    "bpm": 129.19921875,
+    "id": 708
+  },
+  {
+    "filename": "Djo - End of Beginning.mp3",
+    "bpm": 184.5703125,
+    "id": 709
+  },
+  {
+    "filename": "Doja Cat - Paint the Town Red.mp3",
+    "bpm": 117.45383522727273,
+    "id": 738
+  },
+  {
+    "filename": "Dua Lipa - New Rules1.mp3",
+    "bpm": 92.28515625,
+    "id": 875
+  },
+  {
+    "filename": "Dua Lipa - New Rules2.mp3",
+    "bpm": 117.45383522727273,
+    "id": 876
+  },
+  {
+    "filename": "Ed Sheeran - Shivers.mp3",
+    "bpm": 103.359375,
+    "id": 877
+  },
+  {
+    "filename": "Eminem - Houdini.mp3",
+    "bpm": 123.046875,
+    "id": 711
+  },
+  {
+    "filename": "Eminem - Houdini2.mp3",
+    "bpm": 129.19921875,
+    "id": 857
+  },
+  {
+    "filename": "Eminem - Lose Yourself1.mp3",
+    "bpm": 172.265625,
+    "id": 739
+  },
+  {
+    "filename": "Eminem - Lose Yourself2.mp3",
+    "bpm": 172.265625,
+    "id": 740
+  },
+  {
+    "filename": "Eminem - Lose Yourself3.mp3",
+    "bpm": 172.265625,
+    "id": 741
+  },
+  {
+    "filename": "Frozen - Let It Go1.mp3",
+    "bpm": 143.5546875,
+    "id": 788
+  },
+  {
+    "filename": "Frozen - Let It Go2.mp3",
+    "bpm": 143.5546875,
+    "id": 789
+  },
+  {
+    "filename": "Harry Styles - As It Was.mp3",
+    "bpm": 86.1328125,
+    "id": 880
+  },
+  {
+    "filename": "Hozier - Too Sweet.mp3",
+    "bpm": 135.99917763157896,
+    "id": 713
+  },
+  {
+    "filename": "Jason Mraz - Im Yours.mp3",
+    "bpm": 151.99908088235293,
+    "id": 882
+  },
+  {
+    "filename": "Jay-Z - Empire State of Mind1.mp3",
+    "bpm": 86.1328125,
+    "id": 742
+  },
+  {
+    "filename": "Jay-Z - Empire State of Mind2.mp3",
+    "bpm": 86.1328125,
+    "id": 841
+  },
+  {
+    "filename": "Jelly Roll - Save Me.mp3",
+    "bpm": 103.359375,
+    "id": 751
+  },
+  {
+    "filename": "Joan Jett - I Love Rock n Roll.mp3",
+    "bpm": 117.45383522727273,
+    "id": 795
+  },
+  {
+    "filename": "John Denver - Leaving on a Jet Plane.mp3",
+    "bpm": 135.99917763157896,
+    "id": 796
+  },
+  {
+    "filename": "JoJo Siwa - Karma.mp3",
+    "bpm": 78.30255681818181,
+    "id": 719
+  },
+  {
+    "filename": "Justin Timberlake - Selfish.mp3",
+    "bpm": 129.19921875,
+    "id": 883
+  },
+  {
+    "filename": "Jvke - This Is What Heartbreak Feels Like.mp3",
+    "bpm": 107.666015625,
+    "id": 884
+  },
+  {
+    "filename": "Kanye West - Gold Digger.mp3",
+    "bpm": 92.28515625,
+    "id": 842
+  },
+  {
+    "filename": "Lil Nas X - Old Town Road.mp3",
+    "bpm": 135.99917763157896,
+    "id": 843
+  },
+  {
+    "filename": "Lizzo - Juice1.mp3",
+    "bpm": 117.45383522727273,
+    "id": 844
+  },
+  {
+    "filename": "Lizzo - Juice2.mp3",
+    "bpm": 117.45383522727273,
+    "id": 845
+  },
+  {
+    "filename": "Luke Combs - Fast Car.mp3",
+    "bpm": 117.45383522727273,
+    "id": 799
+  },
+  {
+    "filename": "Mark Ambor - Belong Together.mp3",
+    "bpm": 107.666015625,
+    "id": 859
+  },
+  {
+    "filename": "Michael Jackson - Billie Jean1.mp3",
+    "bpm": 117.45383522727273,
+    "id": 800
+  },
+  {
+    "filename": "Michael Jackson - Billie Jean2.mp3",
+    "bpm": 117.45383522727273,
+    "id": 801
+  },
+  {
+    "filename": "Morgan Wallen - I Had Some Help.mp3",
+    "bpm": 129.19921875,
+    "id": 755
+  },
+  {
+    "filename": "Muni Long - Made for Me.mp3",
+    "bpm": 123.046875,
+    "id": 718
+  },
+  {
+    "filename": "Nemo - The Code.mp3",
+    "bpm": 161.4990234375,
+    "id": 712
+  },
+  {
+    "filename": "Norah Jones - Dont Know Why.mp3",
+    "bpm": 172.265625,
+    "id": 803
+  },
+  {
+    "filename": "OutKast - Ms Jackson.mp3",
+    "bpm": 95.703125,
+    "id": 846
+  },
+  {
+    "filename": "Redbone - Come and Get Your Love.mp3",
+    "bpm": 103.359375,
+    "id": 807
+  },
+  {
+    "filename": "Rihanna - Bitch Better Have My Money.mp3",
+    "bpm": 103.359375,
+    "id": 847
+  },
+  {
+    "filename": "Rihanna - We Found Love.mp3",
+    "bpm": 129.19921875,
+    "id": 895
+  },
+  {
+    "filename": "Sabrina Carpenter - Espresso.mp3",
+    "bpm": 117.45383522727273,
+    "id": 710
+  },
+  {
+    "filename": "Sabrina Carpenter - Feather.mp3",
+    "bpm": 123.046875,
+    "id": 856
+  },
+  {
+    "filename": "Sam Smith - Unholy.mp3",
+    "bpm": 151.99908088235293,
+    "id": 853
+  },
+  {
+    "filename": "Shaboozey - A Bar Song (Tipsy).mp3",
+    "bpm": 83.35433467741936,
+    "id": 854
+  },
+  {
+    "filename": "Spice Girls - Wannabe1.mp3",
+    "bpm": 107.666015625,
+    "id": 809
+  },
+  {
+    "filename": "Spice Girls - Wannabe2.mp3",
+    "bpm": 107.666015625,
+    "id": 810
+  },
+  {
+    "filename": "SZA - Saturn.mp3",
+    "bpm": 89.10290948275862,
+    "id": 717
+  },
+  {
+    "filename": "Taylor Swift - Anti Hero.mp3",
+    "bpm": 78.30255681818181,
+    "id": 858
+  },
+  {
+    "filename": "Taylor Swift - Fortnight.mp3",
+    "bpm": 117.45383522727273,
+    "id": 855
+  },
+  {
+    "filename": "Teddy Swims - Lose Control2.mp3",
+    "bpm": 112.34714673913044,
+    "id": 716
+  },
+  {
+    "filename": "The Beatles - Let It Be.mp3",
+    "bpm": 161.4990234375,
+    "id": 797
+  },
+  {
+    "filename": "Tommy Richman - Million Dollar Baby.mp3",
+    "bpm": 135.99917763157896,
+    "id": 714
+  },
+  {
+    "filename": "Tones and I - Dance Monkey.mp3",
+    "bpm": 99.38401442307692,
+    "id": 727
+  },
+  {
+    "filename": "Travis Scott - Sicko Mode.mp3",
+    "bpm": 135.99917763157896,
+    "id": 849
+  },
+  {
+    "filename": "Usher - Yeah.mp3",
+    "bpm": 95.703125,
+    "id": 850
+  }
+]
