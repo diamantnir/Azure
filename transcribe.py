@@ -67,7 +67,8 @@ def add_subtitle_to_video(ffmpeg_path, input_file, subtitle_file, language, outp
         )
     else:
         # Burn subtitles into the video.
-        cmd = f'"{ffmpeg_path}" -i "{input_file}" -vf "subtitles={subtitle_file}" -y "{output_video}"'
+        cmd = f'"{ffmpeg_path}" -i "{input_file}" -vf "subtitles=\'{subtitle_file}\'" -y "{output_video}"'
+
     subprocess.run(cmd, shell=True, check=True)
 
 def transcribe_video(ffmpeg_path, input_file):
