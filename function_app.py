@@ -698,14 +698,14 @@ def extract_best_clips(ffmpeg_path, ffprobe_path, input_file, total_duration, fp
     filter_complex_str = f'"{streams_str}concat=n={num_inputs}:v=1:a=1 [v][a]"'
 
     cmd_concat = (
-        f'ffmpeg {inputs_str} '
+        f'"{ffmpeg_path}" {inputs_str} '
         f'-filter_complex {filter_complex_str} '
         f'-map "[v]" -map "[a]" '
         f'-hide_banner -loglevel error -y "{final_output_file}"'
     )
     subprocess.run(cmd_concat, shell=True, check=True)
     logging.info("finished running 2nd cmd")
-    return final_output_file
+    
     #cmd_concat = (
     #    f"\"{ffmpeg_path}\" -f concat -safe 0 -i \"{concat_list_path}\" "
     #    f"-c copy -hide_banner -loglevel error -y \"{final_output_file}\""
