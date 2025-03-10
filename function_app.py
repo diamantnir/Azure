@@ -845,31 +845,45 @@ def generate_music_video(ffmpeg_path, input_file, song):
     """
     Generates a music video by:
     1. Resizing the input video to 540x960 pixels.
-    2. Overlaying a GIF named [song].gif.
+    2. Overlaying a WEBM named [song].webm.
     3. Replacing the audio with [song].mp3.
     
     Parameters:
         input_file (str): The input video file (mp4).
-        song (str): The base name for the gif and mp3 files (without extension).
+        song (str): The base name for the webm and mp3 files (without extension).
         ffmpeg_path (str): The full path to the ffmpeg executable.
         
     Returns:
         str: The filename of the generated output video.
     """
-    # Build file names for the gif and mp3
+    logging.info("Starting generate_music_video with input_file=%s, song=%s", input_file, song)
+
+    # Build file names for the webm and mp3
     webm_file = os.path.join(os.getcwd(), "lyrics", f"{song}.webm")
     mp3_file = os.path.join(os.getcwd(), "lyrics", f"{song}.mp3")
+    
+    # Check existence of webm_file
+    if os.path.isfile(webm_file):
+        logging.info("WEBM file found: %s", webm_file)
+    else:
+        logging.warning("WEBM file does NOT exist: %s", webm_file)
+
+    # Check existence of mp3_file
+    if os.path.isfile(mp3_file):
+        logging.info("MP3 file found: %s", mp3_file)
+    else:
+        logging.warning("MP3 file does NOT exist: %s", mp3_file)
     
     # Create an output filename by appending the song name before the extension.
     base, ext = os.path.splitext(input_file)
     output_file = f"{base}_{song}{ext}"
+    logging.info("Output video will be: %s", output_file)
     
     # Build the ffmpeg command.
-    # The filter_complex first scales the video to 540x960 and then overlays the gif.
     command = [
         ffmpeg_path,
         "-i", input_file,
-        "-c:v", "libvpx-vp9",
+        "-c:v", "libvpx-vp9",   # <--- Make sure you really want both this and libx264
         "-i", webm_file,
         "-i", mp3_file,
         "-filter_complex", "[0:v]scale=540:960[scaled];[scaled][1:v]overlay=0:0[out]",
@@ -881,13 +895,23 @@ def generate_music_video(ffmpeg_path, input_file, song):
         output_file
     ]
     
+    # Log the command before running
+    logging.info("Running ffmpeg command: %s", " ".join(command))
+    
     try:
-        # Run the ffmpeg command.
         subprocess.run(command, check=True)
-        return output_file
+        logging.info("ffmpeg command completed successfully.")
     except subprocess.CalledProcessError as e:
-        print("An error occurred during the video generation process.")
+        logging.error("An error occurred during the video generation process: %s", e)
         raise e
+    
+    # Verify the output file
+    if os.path.isfile(output_file):
+        logging.info("Output file was successfully created: %s", output_file)
+    else:
+        logging.warning("Output file does not exist: %s", output_file)
+    
+    return output_file
 
 
 def process_single_file(ffmpeg_path, ffprobe_path, input_file, funcId):
