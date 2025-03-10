@@ -17,8 +17,8 @@ def generate_music_video(ffmpeg_path, input_file, song):
         str: The filename of the generated output video.
     """
     # Build file names for the gif and mp3
-    webm_file = f"lyrics\{song}.webm"
-    mp3_file = f"lyrics\{song}.mp3"
+    webm_file = os.path.join(os.getcwd(), "lyrics", f"{song}.webm")
+    mp3_file = os.path.join(os.getcwd(), "lyrics", f"{song}.mp3")
     
     # Create an output filename by appending the song name before the extension.
     base, ext = os.path.splitext(input_file)
