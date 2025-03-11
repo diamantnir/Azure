@@ -31,6 +31,8 @@ MIN_DURATION_REQUIREMENTS = {
     16: 8.0,
     17: 4.0,
     18: 4.0,
+    19: 4.0,
+    20: 4.0,
     101: 4
 }
 
@@ -1114,12 +1116,29 @@ def process_single_file(ffmpeg_path, ffprobe_path, input_file, funcId):
         processed_file = transcribe.transcribe_video(ffmpeg_path, processed_file)
         logging.info("Transcription function ending")
     elif funcId == 18:
-        logging.info("Music video")
+        logging.info("Music video 1")
         processed_file = extract_best_4_seconds(
             ffmpeg_path, input_file, total_duration, fps, window_size=4.0
         )
         processed_file = generate_music_video(ffmpeg_path, processed_file, 'Diamonds')
         logging.info("Music video function ending")        
+        
+    elif funcId == 19:
+        logging.info("Music video 1")
+        processed_file = extract_best_4_seconds(
+            ffmpeg_path, input_file, total_duration, fps, window_size=4.0
+        )
+        processed_file = generate_music_video(ffmpeg_path, processed_file, 'NewYork')
+        logging.info("Music video function ending")        
+
+    elif funcId == 20:
+        logging.info("Music video 1")
+        processed_file = extract_best_4_seconds(
+            ffmpeg_path, input_file, total_duration, fps, window_size=4.0
+        )
+        processed_file = generate_music_video(ffmpeg_path, processed_file, 'ThatWay')
+        logging.info("Music video function ending")        
+        
         
     else:
         raise ValueError(f"funcId={funcId} not implemented for single file processing.")
