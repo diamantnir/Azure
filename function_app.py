@@ -833,12 +833,26 @@ def download_file(url, local_path):
     """
     Download a file from the given URL and save it at local_path.
     """
-    logging.info(f"Downloading file from URL: {url}")
+    logging.info(f"Attempting to download file from URL: {url}")
+    
+    # Check if the file exists before downloading
+    if os.path.exists(local_path):
+        logging.info(f"File already exists at {local_path} before download.")
+    else:
+        logging.info(f"No file found at {local_path} before download.")
+    
     r = requests.get(url, stream=True)
     r.raise_for_status()
+    
     with open(local_path, "wb") as f:
         for chunk in r.iter_content(chunk_size=8192):
             f.write(chunk)
+    
+    # Check if the file exists after downloading
+    if os.path.exists(local_path):
+        logging.info(f"File successfully downloaded and exists at {local_path}.")
+    else:
+        logging.error(f"Download failed; file does not exist at {local_path}.")
 
 
 def generate_music_video(ffmpeg_path, input_file, song):
