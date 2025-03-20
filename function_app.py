@@ -7,9 +7,12 @@ import requests
 import shutil
 import json
 import uuid
+import random
 from azure.storage.blob import BlobServiceClient, ContentSettings
 from azure.core.exceptions import ResourceExistsError
 import transcribe
+from generate_paparazzi_video import generate_paparazzi_video
+from collage import create_collage
 #import generate_music_video
 
 MIN_DURATION_REQUIREMENTS = {
@@ -33,6 +36,9 @@ MIN_DURATION_REQUIREMENTS = {
     18: 4.0,
     19: 4.0,
     20: 4.0,
+    21: 4.0,
+    22: 4.0,
+    23: 4.0,
     101: 4
 }
 
@@ -1138,7 +1144,24 @@ def process_single_file(ffmpeg_path, ffprobe_path, input_file, funcId):
         )
         processed_file = generate_music_video(ffmpeg_path, processed_file, 'ThatWay')
         logging.info("Music video function ending")        
-        
+    elif funcId == 21:
+        logging.info("Music video paparazzi")
+        processed_file = extract_best_4_seconds(
+            ffmpeg_path, input_file, total_duration, fps, window_size=4.0
+        )
+        processed_file = generate_paparazzi_video(ffmpeg_path, processed_file, 'paparazzi',[0, 1.540, 2.007, 2.607, 3.040, 3.607, 3.940])
+        logging.info("Music video paparazzi function ending")       
+    elif funcId == 22:
+        logging.info("Auto-Collage")
+        processed_file = create_collage(ffmpeg_path, input_file, 'Collage',total_duration)
+        logging.info("Music video paparazzi function ending")                   
+    elif funcId == 23:
+        logging.info("Random lyric video")
+        processed_file = extract_best_4_seconds(
+            ffmpeg_path, input_file, total_duration, fps, window_size=4.0
+        )
+        processed_file = generate_music_video(ffmpeg_path, processed_file, random.choice(["ThatWay", "NewYork", "Diamonds"]))
+        logging.info("Music video function ending")
         
     else:
         raise ValueError(f"funcId={funcId} not implemented for single file processing.")
