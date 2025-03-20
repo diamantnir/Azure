@@ -36,7 +36,7 @@ MIN_DURATION_REQUIREMENTS = {
     18: 4.0,
     19: 4.0,
     20: 4.0,
-    21: 4.0,
+    21: 5.0,
     22: 4.0,
     23: 4.0,
     101: 4
@@ -1147,7 +1147,7 @@ def process_single_file(ffmpeg_path, ffprobe_path, input_file, funcId):
     elif funcId == 21:
         logging.info("Music video paparazzi")
         processed_file = extract_best_4_seconds(
-            ffmpeg_path, input_file, total_duration, fps, window_size=4.0
+            ffmpeg_path, input_file, total_duration, fps, window_size=5.0
         )
         processed_file = generate_paparazzi_video(ffmpeg_path, processed_file, 'Paparazzi',[0, 1.540, 2.007, 2.607, 3.040, 3.607, 3.940])
         logging.info("Music video paparazzi function ending")       
