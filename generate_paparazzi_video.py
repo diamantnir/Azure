@@ -33,8 +33,13 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
     logging.info("Starting generate_paparazzi_video with input_file=%s, song=%s", input_file, song)
     print("Starting generate_paparazzi_video with input_file={}, song={}".format(input_file, song))
     
+    # Determine input file directory and base name.
+    input_abs = os.path.abspath(input_file)
+    input_dir = os.path.dirname(input_abs)
+    base_name, ext = os.path.splitext(os.path.basename(input_file))
+    
     # Pre-scale the input video to 540x960 for efficiency.
-    scaled_input = "input_scaled.mp4"
+    scaled_input = os.path.join(input_dir, f"{base_name}_scaled{ext}")
     scale_cmd = [
         ffmpeg_path, "-hide_banner", "-loglevel", "error",
         "-i", input_file,
@@ -53,7 +58,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
         logging.error("Error pre-scaling input video: %s", e)
         raise e
 
-    # Build paths for the WEBM and MP3 files.
+    # Build paths for the WEBM and MP3 files (assumed to be in a "lyrics" folder).
     webm_file = os.path.join(os.getcwd(), "lyrics", f"{song}.webm")
     webm2_file = os.path.join(os.getcwd(), "lyrics", f"{song}2.webm")
     mp3_file = os.path.join(os.getcwd(), "lyrics", f"{song}.mp3")
@@ -80,6 +85,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
             # First segment: original color.
             start = cut_points[0]
             end = cut_points[1]
+            segment_filename = os.path.join(input_dir, f"{base_name}_segment_{i}{ext}")
             cmd = [
                 ffmpeg_path, "-hide_banner", "-loglevel", "error",
                 "-ss", str(start),
@@ -90,12 +96,13 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
                 "-preset", "fast",
                 "-an",
                 "-y",
-                f"segment_{i}.mp4"
+                segment_filename
             ]
         else:
             # Subsequent segments: add gap and convert to B/W.
             start = cut_points[i] + gap
             end = cut_points[i + 1]
+            segment_filename = os.path.join(input_dir, f"{base_name}_segment_{i}{ext}")
             cmd = [
                 ffmpeg_path, "-hide_banner", "-loglevel", "error",
                 "-ss", str(start),
@@ -107,7 +114,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
                 "-preset", "fast",
                 "-an",
                 "-y",
-                f"segment_{i}.mp4"
+                segment_filename
             ]
         logging.info("Extracting segment %d: start=%s, end=%s", i, start, end)
         print("Extracting segment {}: start={}, end={}".format(i, start, end))
@@ -116,11 +123,11 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
         except subprocess.CalledProcessError as e:
             logging.error("Error extracting segment %d: %s", i, e)
             raise e
-        segment_files.append(f"segment_{i}.mp4")
+        segment_files.append(segment_filename)
         
     # Extract the final segment: from (cut_points[-1] + gap) to end, in B/W.
     final_start = cut_points[-1] + gap
-    final_segment = "segment_final.mp4"
+    final_segment = os.path.join(input_dir, f"{base_name}_segment_final{ext}")
     cmd = [
         ffmpeg_path, "-hide_banner", "-loglevel", "error",
         "-ss", str(final_start),
@@ -181,22 +188,25 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
     logging.info("Filter_complex for merging: %s", filter_complex)
     print("Filter_complex for merging: {}".format(filter_complex))
     
+    merged_file = os.path.join(input_dir, f"{base_name}_merged{ext}")
     merge_cmd = [ffmpeg_path, "-hide_banner", "-loglevel", "error"]
     for seg in segment_files:
         merge_cmd.extend(["-i", seg])
     merge_cmd.extend([
         "-filter_complex", filter_complex,
         "-map", f"[{chain_label}]",
-        "-y", "merged.mp4"
+        "-y",
+        merged_file
     ])
-    logging.info("Merging segments with transitions into merged.mp4")
-    print("Merging segments with transitions into merged.mp4")
+    logging.info("Merging segments with transitions into %s", merged_file)
+    print("Merging segments with transitions into {}".format(merged_file))
     try:
         subprocess.run(merge_cmd, check=True)
     except subprocess.CalledProcessError as e:
         logging.error("Error merging segments: %s", e)
         raise e
         
+    # Remove segment files as they are no longer needed.
     for seg in segment_files:
         if os.path.exists(seg):
             print("Deleted temporary segment file:", seg)
@@ -205,13 +215,12 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
     print("Deleted temporary segment files")
     
     # --- Final processing: first, blend merged video with webm_file and replace audio with mp3 ---
-    base, ext = os.path.splitext("merged.mp4")
-    output_file = f"{base}_{song}{ext}"
-    temp_output = "temp_output.mp4"
+    output_file = os.path.join(input_dir, f"{base_name}_{song}{ext}")
+    temp_output = os.path.join(input_dir, f"{base_name}_temp_output{ext}")
     
     final_cmd = [
         ffmpeg_path, "-hide_banner", "-loglevel", "error",
-        "-i", "merged.mp4",
+        "-i", merged_file,
         "-i", webm_file,
         "-i", mp3_file,
         "-filter_complex", "[0:v][1:v]blend=all_mode=lighten:all_opacity=1.0[out]",
@@ -232,7 +241,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
         raise e
 
     # --- New step: overlay webm2_file on top of temp_output ---
-    temp_output2 = "temp_output2.mp4"
+    temp_output2 = os.path.join(input_dir, f"{base_name}_temp_output2{ext}")
     second_cmd = [
         ffmpeg_path, "-hide_banner", "-loglevel", "error",
         "-i", temp_output,
@@ -263,7 +272,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
     ]
     try:
         result = subprocess.run(ffprobe_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        duration = float(result.stdout.decode().strip())
+        duration_final = float(result.stdout.decode().strip())
     except Exception as e:
         logging.error("Error getting duration of %s: %s", temp_output2, e)
         raise e
@@ -271,7 +280,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
     trim_cmd = [
         ffmpeg_path, "-hide_banner", "-loglevel", "error",
         "-i", temp_output2,
-        "-t", str(duration),
+        "-t", str(duration_final),
         "-c", "copy",
         "-y",
         output_file
@@ -291,7 +300,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
         logging.warning("Output video was not created: %s", output_file)
 
     # Clean up temporary files.
-    for temp in ["merged.mp4", temp_output, temp_output2, scaled_input]:
+    for temp in [merged_file, temp_output, temp_output2, scaled_input]:
         if os.path.exists(temp):
             os.remove(temp)
             logging.info("Deleted temporary file: %s", temp)

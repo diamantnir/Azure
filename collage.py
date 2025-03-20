@@ -40,18 +40,19 @@ def cleanup(files):
             print(f"Error deleting file {file}: {e}")
 
 def create_collage(ffmpeg_path, input_file, song, duration):
+    # Determine the directory and base name of the input file
+    input_abs = os.path.abspath(input_file)
+    input_dir = os.path.dirname(input_abs)
+    base_name, ext = os.path.splitext(os.path.basename(input_file))
     
-    if duration < 0.5:
-        raise ValueError("The video must be at least 0.5 seconds long.")
-
-    # Build file names for the webm and mp3
+    # Build file names for the webm and mp3 (assuming these live in a "lyrics" folder in cwd)
     webm_file = os.path.join(os.getcwd(), "lyrics", f"{song}.webm")
     mp3_file = os.path.join(os.getcwd(), "lyrics", f"{song}.mp3")
     
-    temp_files = []  # List of intermediate files for optional cleanup
+    temp_files = []  # List to hold intermediate file paths for later cleanup
 
     # Step 1: Resize the input video to 540x960.
-    resized_file = "resized.mp4"
+    resized_file = os.path.join(input_dir, f"{base_name}_resized{ext}")
     temp_files.append(resized_file)
     cmd_resize = [
         ffmpeg_path, "-y", "-i", input_file,
@@ -60,8 +61,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     ]
     run_command(cmd_resize)
     
-    # Helper: Build input options for a given number of 0.5s segments.
-    # Each input is taken from 'resized.mp4' with a random start time.
+    # Helper: Build input options for a given number of 0.5s segments from the resized video.
     def build_inputs(n):
         inputs = []
         for _ in range(n):
@@ -69,8 +69,8 @@ def create_collage(ffmpeg_path, input_file, song, duration):
             inputs.extend(["-ss", str(start), "-t", "0.5", "-i", resized_file])
         return inputs
 
-    # Step 2: Create an extra clip (clip0.mp4) to appear at the very beginning.
-    clip0 = "clip0.mp4"
+    # Step 2: Create an extra clip (clip0) to appear at the very beginning.
+    clip0 = os.path.join(input_dir, f"{base_name}_clip0{ext}")
     temp_files.append(clip0)
     start = random.uniform(0, duration - 0.5)
     cmd_clip0 = [
@@ -83,7 +83,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_clip0)
     
     # Collage 1: 2 inputs, vertical layout, black and white.
-    collage1 = "collage1.mp4"
+    collage1 = os.path.join(input_dir, f"{base_name}_collage1{ext}")
     temp_files.append(collage1)
     inputs = build_inputs(2)
     filter_complex = (
@@ -99,7 +99,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_collage1)
     
     # Collage 2: 3 inputs, vertical stack, color.
-    collage2 = "collage2.mp4"
+    collage2 = os.path.join(input_dir, f"{base_name}_collage2{ext}")
     temp_files.append(collage2)
     inputs = build_inputs(3)
     filter_complex = (
@@ -116,7 +116,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_collage2)
     
     # Collage 3: 4 inputs, 2x2 grid, black and white.
-    collage3 = "collage3.mp4"
+    collage3 = os.path.join(input_dir, f"{base_name}_collage3{ext}")
     temp_files.append(collage3)
     inputs = build_inputs(4)
     filter_complex = (
@@ -134,7 +134,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_collage3)
     
     # Collage 4: 6 inputs, 2 columns x 3 rows, color.
-    collage4 = "collage4.mp4"
+    collage4 = os.path.join(input_dir, f"{base_name}_collage4{ext}")
     temp_files.append(collage4)
     inputs = build_inputs(6)
     filter_complex = (
@@ -154,7 +154,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_collage4)
     
     # Collage 5: 2 inputs, vertical layout, black and white.
-    collage5 = "collage5.mp4"
+    collage5 = os.path.join(input_dir, f"{base_name}_collage5{ext}")
     temp_files.append(collage5)
     inputs = build_inputs(2)
     filter_complex = (
@@ -170,7 +170,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_collage5)
     
     # Collage 6: 3 inputs, vertical stack, color.
-    collage6 = "collage6.mp4"
+    collage6 = os.path.join(input_dir, f"{base_name}_collage6{ext}")
     temp_files.append(collage6)
     inputs = build_inputs(3)
     filter_complex = (
@@ -187,7 +187,7 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_collage6)
     
     # Collage 7: 4 inputs, 2x2 grid, black and white.
-    collage7 = "collage7.mp4"
+    collage7 = os.path.join(input_dir, f"{base_name}_collage7{ext}")
     temp_files.append(collage7)
     inputs = build_inputs(4)
     filter_complex = (
@@ -205,19 +205,19 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     run_command(cmd_collage7)
     
     # Step 3: Concatenate the extra clip and all 7 collages.
-    concat_list = "concat_list.txt"
+    concat_list = os.path.join(input_dir, f"{base_name}_concat_list.txt")
     with open(concat_list, "w") as f:
-        f.write("file 'clip0.mp4'\n")
-        f.write("file 'collage1.mp4'\n")
-        f.write("file 'collage2.mp4'\n")
-        f.write("file 'collage3.mp4'\n")
-        f.write("file 'collage4.mp4'\n")
-        f.write("file 'collage5.mp4'\n")
-        f.write("file 'collage6.mp4'\n")
-        f.write("file 'collage7.mp4'\n")
+        f.write(f"file '{clip0}'\n")
+        f.write(f"file '{collage1}'\n")
+        f.write(f"file '{collage2}'\n")
+        f.write(f"file '{collage3}'\n")
+        f.write(f"file '{collage4}'\n")
+        f.write(f"file '{collage5}'\n")
+        f.write(f"file '{collage6}'\n")
+        f.write(f"file '{collage7}'\n")
     temp_files.append(concat_list)
     
-    final_file = "final.mp4"
+    final_file = os.path.join(input_dir, f"{base_name}_final{ext}")
     cmd_concat = [
         ffmpeg_path, "-y",
         "-f", "concat",
@@ -233,25 +233,24 @@ def create_collage(ffmpeg_path, input_file, song, duration):
     cleanup(temp_files)
     
     # Step 5: Overlay the transparent WEBM and replace audio.
-    # This command scales the final video (if needed), forces alpha on the overlay, and then composites.
-    final_output = "final_with_overlay_audio.mp4"
+    final_output = os.path.join(input_dir, f"{base_name}_final_with_overlay_audio{ext}")
     cmd_overlay_audio = [
         ffmpeg_path, "-y",
-        "-i", final_file,           # our final.mp4 from previous steps
+        "-i", final_file,           # our final video from previous steps
         "-c:v", "libvpx-vp9",
-        "-i", webm_file,       # transparent VP9 overlay
-        "-i", mp3_file,          # new audio track
+        "-i", webm_file,            # transparent VP9 overlay
+        "-i", mp3_file,             # new audio track
         "-filter_complex", "[0:v]scale=540:960[scaled];[scaled][1:v]overlay=0:0[out]",
-        "-map", "[out]",            # use the overlaid video stream
-        "-map", "2:a",              # use the audio from Video.mp3
-        "-c:v", "libx264",          # encode video using H.264
-        "-c:a", "aac",              # encode audio using AAC
-        "-shortest",                # end when the shortest stream ends
+        "-map", "[out]",           # use the overlaid video stream
+        "-map", "2:a",             # use the audio from the mp3 file
+        "-c:v", "libx264",         # encode video using H.264
+        "-c:a", "aac",             # encode audio using AAC
+        "-shortest",               # end when the shortest stream ends
         final_output
     ]
     run_command(cmd_overlay_audio)
     print("Final video with overlay and new audio created:", final_output)
-    return (final_output)
+    return final_output
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
