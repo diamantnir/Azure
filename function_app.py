@@ -1149,7 +1149,7 @@ def process_single_file(ffmpeg_path, ffprobe_path, input_file, funcId):
         processed_file = extract_best_4_seconds(
             ffmpeg_path, input_file, total_duration, fps, window_size=5.0
         )
-        processed_file = generate_paparazzi_video(ffmpeg_path, processed_file, 'Paparazzi',[0, 1.540, 2.007, 2.607, 3.040, 3.607, 3.940])
+        processed_file = generate_paparazzi_video(ffmpeg_path, ffprobe_path, processed_file, 'Paparazzi',[0, 1.540, 2.007, 2.607, 3.040, 3.607, 3.940])
         logging.info("Music video paparazzi function ending")       
     elif funcId == 22:
         logging.info("Auto-Collage")

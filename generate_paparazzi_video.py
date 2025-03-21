@@ -2,7 +2,7 @@ import os
 import subprocess
 import logging
 
-def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
+def generate_paparazzi_video(ffmpeg_path, ffprobe_path, input_file, song, cut_points):
     """
     Generates a paparazzi video by:
       1. Pre-scaling the input video to 540x960.
@@ -265,7 +265,7 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
 
     # --- After both overlays, run ffprobe and trimming ---
     ffprobe_cmd = [
-        "ffprobe", "-v", "error",
+        ffprobe_path, "-v", "error",
         "-show_entries", "format=duration",
         "-of", "default=noprint_wrappers=1:nokey=1",
         temp_output2
@@ -312,12 +312,13 @@ def generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points):
 def main():
     logging.basicConfig(level=logging.INFO)
     ffmpeg_path = "ffmpeg"  # or full path to ffmpeg
+    ffprobe_path = "ffprobe"
     input_file = "Video.mp4"
     song = "paparazzi"
     # Example cut_points: [0, 1.540, 2.007, 2.607, 3.040, 3.607, 3.940]
     cut_points = [0, 1.540, 2.007, 2.607, 3.040, 3.607, 3.940]
     
-    output_file = generate_paparazzi_video(ffmpeg_path, input_file, song, cut_points)
+    output_file = generate_paparazzi_video(ffmpeg_path, ffprobe_path, input_file, song, cut_points)
     print("Generated video:", output_file)
 
 if __name__ == "__main__":
