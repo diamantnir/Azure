@@ -221,9 +221,10 @@ def generate_paparazzi_video(ffmpeg_path, ffprobe_path, input_file, song, cut_po
     final_cmd = [
         ffmpeg_path, "-hide_banner", "-loglevel", "error",
         "-i", merged_file,
+        "-c:v", "libvpx-vp9",   # <--- Make sure you really want both this and libx264
         "-i", webm_file,
         "-i", mp3_file,
-        "-filter_complex", "[0:v][1:v]blend=all_mode=lighten:all_opacity=1.0[out]",
+        "-filter_complex", "[0:v]scale=540:960[scaled];[scaled][1:v]overlay=0:0[out]",
         "-map", "[out]",
         "-map", "2:a",
         "-c:v", "libx264",
@@ -245,8 +246,9 @@ def generate_paparazzi_video(ffmpeg_path, ffprobe_path, input_file, song, cut_po
     second_cmd = [
         ffmpeg_path, "-hide_banner", "-loglevel", "error",
         "-i", temp_output,
+        "-c:v", "libvpx-vp9",   # <--- Make sure you really want both this and libx264
         "-i", webm2_file,
-        "-filter_complex", "[0:v][1:v]blend=all_mode=lighten:all_opacity=1.0[out]",
+        "-filter_complex", "[0:v]scale=540:960[scaled];[scaled][1:v]overlay=0:0[out]",
         "-map", "[out]",
         "-map", "0:a",
         "-c:v", "libx264",
